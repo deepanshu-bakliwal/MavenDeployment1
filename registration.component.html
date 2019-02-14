@@ -1,0 +1,108 @@
+<section>
+  <div class="container py-5">
+    <h3>Registration Form</h3>
+    <br>
+    <br>
+    <form #pform="ngForm" ngNativeValidate (ngSubmit)="register(pform)" [formGroup]="regForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="firstName">First-Name</label>
+            <input [(ngModel)]="users.fName" class="form-control" formControlName="firstName" id="firstName"
+              placeholder="Enter first name" name="first_name"
+              [ngClass]="{'is-invalid': regForm.get('firstName').touched && regForm.get('firstName').invalid}">
+            <div class="invalid-feedback">
+              <div>First Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last-Name</label>
+            <input [(ngModel)]="users.lName" class="form-control" formControlName="lastName" id="lastName"
+              placeholder="Enter last name" name="last_name"
+              [ngClass]="{'is-invalid': regForm.get('lastName').touched && regForm.get('lastName').invalid}">
+            <div class="invalid-feedback">
+              <div>Last Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="RegistrationEmail">Email address</label>
+            <input type="email" [(ngModel)]="users.email" class="form-control" formControlName="email"
+              id="RegistrationEmail" aria-describedby="emailHelp" placeholder="Enter email" name="email_add"
+              [ngClass]="{'is-invalid': regForm.get('email').touched && regForm.get('email').invalid}">
+            <div *ngIf="regForm.get('email').touched && regForm.get('email').invalid" class="invalid-feedback">
+              <div *ngIf="regForm.get('email').errors.required">Email is required</div>
+              <div *ngIf="regForm.get('email').errors.email">Email must be a valid email</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="pswd">Password</label>
+            <input type="password" [(ngModel)]="users.password" class="form-control" formControlName="password"
+              id="pswd" placeholder="Password" name="password"
+              [ngClass]="{'is-invalid': regForm.get('password').touched && regForm.get('password').invalid}">
+            <div *ngIf="regForm.get('password').touched && regForm.get('password').invalid" class="invalid-feedback">
+              <div *ngIf="regForm.get('password').errors.required">Password is required</div>
+              <div *ngIf="regForm.get('password').errors.minlength">Password must be atleast 8 numeric values</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="conf-pswd">Confirm Password</label>
+            <input type="password" class="form-control" formControlName="confirm_password" id="conf-pswd"
+              placeholder="Re-enter Password" name="conf_pass"
+              [ngClass]="{'is-invalid': regForm.get('confirm_password').touched && regForm.get('confirm_password').invalid}">
+            <div *ngIf="regForm.get('confirm_password').touched && regForm.get('confirm_password').invalid"
+              class="invalid-feedback">
+              <div *ngIf="regForm.get('confirm_password').errors.required">Password is required</div>
+              <div *ngIf="regForm.get('confirm_password').errors.minlength">Password must be atleast 8 numeric values</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="DateOfBirth">Date of birth</label>
+            <input type="date" [(ngModel)]="users.dob" class="form-control" formControlName="dob" id="DateOfBirth"
+              placeholder="dob" name="dob"
+              [ngClass]="{'is-invalid': regForm.get('dob').touched && regForm.get('dob').invalid}">
+            <div class="invalid-feedback">
+              <div>Date of Birth is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="PhoneNo">Phone Number</label>
+            <input type="tel" (keypress)="keyPress($event)" [(ngModel)]="users.phoneNo" class="form-control"
+              formControlName="phone_no" id="PhoneNo" placeholder="phone number" name="phone_number" maxlength="10"
+              minlength="10" [ngClass]="{'is-invalid': regForm.get('phone_no').touched && regForm.get('phone_no').invalid}">
+            <div class="invalid-feedback">
+              <div>Phone No. is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        var password = document.getElementById("pswd"),
+          confirm_password = document.getElementById("conf-pswd");
+        function validatePassword() {
+          if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Password does not match");
+          }
+          else {
+            password.setCustomValidity("Password match");
+          }
+        }
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+
+        var check = function () {
+          if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'matching';
+          }
+          else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'not matching';
+          }
+        }
+      </script>
+      <button class="btn btn-primary" [disabled]="!regForm.valid">Submit</button>
+    </form>
+  </div>
+</section>
